@@ -1,0 +1,34 @@
+name: Linux Desktop (XFCE)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  xfce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Install XFCE and virtual display
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xfce4 dbus-x11 xvfb
+      - name: Start and verify XFCE session
+        run: |
+          set -e
+          export DISPLAY=:99
+          Xvfb :99 -screen 0 1280x800x24 &
+          XVFB_PID=$!
+          trap 'kill "$XFVb_PID" 2>/dev/null || true' EXIT
+          sleep 2
+          dbus-run-session -- startxfce4 &
+          XFCE_PID=$!
+          sleep 8
+          if kill -0 "$XFCE_PID" 2>/dev/null; then
+            echo "XFCE session started successfully on virtual display :99"
+          else
+            echo "XFCE failed to start"
+            exit 1
+          fi
+          kill "$XFCE_PID" 2>/dev/null || true
+          kill "$XVFB_PID" 2>/dev/null || true
+          wait || true
