@@ -28,5 +28,5 @@ fi
 docker compose up -d
 echo
 echo "Desktop container started."
-echo "In Codespaces, open the Ports tab and open port 3000 in your browser."
+echo "In Codespaces, open the Ports tab and open port 3001 in your browser."
 echo "Keep port visibility Private. Log in with username 'player' and the password shown above."
