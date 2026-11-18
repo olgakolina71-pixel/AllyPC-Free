@@ -2,8 +2,6 @@ services:
   desktop:
     image: lscr.io/linuxserver/webtop:ubuntu-xfce
     container_name: codespace-desktop
-    security_opt:
-      - seccomp:unconfined
     shm_size: "1gb"
     environment:
       PUID: "1000"
@@ -12,7 +10,7 @@ services:
       CUSTOM_USER: "${DESKTOP_USER:-player}"
       PASSWORD: "${DESKTOP_PASSWORD:?Run start-desktop.sh to create a password}"
     ports:
-      - "3000:3000"
+      - "3001:3001"
     volumes:
       - desktop-config:/config
     restart: unless-stopped
