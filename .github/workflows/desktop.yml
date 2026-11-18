@@ -18,7 +18,7 @@ jobs:
           export DISPLAY=:99
           Xvfb :99 -screen 0 1280x800x24 &
           XVFB_PID=$!
-          trap 'kill "$XFVb_PID" 2>/dev/null || true' EXIT
+          trap 'kill "$XVFB_PID" 2>/dev/null || true' EXIT
           sleep 2
           dbus-run-session -- startxfce4 &
           XFCE_PID=$!
